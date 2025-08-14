@@ -1,0 +1,154 @@
+<div class="container-fluid gradient-bg min-vh-100 py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-sm-12">
+      <div class="card">
+        <div class="card-body p-5">
+          <div class="text-center mb-4">
+            <h1 class="text-gradient fw-bold">Sign Up as a Company</h1>
+            <p class="text-muted">Create your company account</p>
+          </div>
+
+          <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+            <div class="row">
+              <!-- Company Arabic Name -->
+              <div class="col-md-6 mb-3">
+                <label for="arabicName" class="form-label fw-semibold">Company Arabic Name *</label>
+                <input
+                  type="text"
+                  id="arabicName"
+                  formControlName="arabicName"
+                  class="form-control"
+                  placeholder="اسم الشركة"
+                  [class.is-invalid]="isFieldInvalid('arabicName')"
+                >
+                <div class="invalid-feedback" *ngIf="isFieldInvalid('arabicName')">
+                  {{ getErrorMessage('arabicName') }}
+                </div>
+              </div>
+
+              <!-- Company English Name -->
+              <div class="col-md-6 mb-3">
+                <label for="englishName" class="form-label fw-semibold">Company English Name *</label>
+                <input
+                  type="text"
+                  id="englishName"
+                  formControlName="englishName"
+                  class="form-control"
+                  placeholder="Company Name"
+                  [class.is-invalid]="isFieldInvalid('englishName')"
+                >
+                <div class="invalid-feedback" *ngIf="isFieldInvalid('englishName')">
+                  {{ getErrorMessage('englishName') }}
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Email Address -->
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label fw-semibold">Email Address *</label>
+                <input
+                  type="email"
+                  id="email"
+                  formControlName="email"
+                  class="form-control"
+                  placeholder="company@example.com"
+                  [class.is-invalid]="isFieldInvalid('email')"
+                >
+                <div class="invalid-feedback" *ngIf="isFieldInvalid('email')">
+                  {{ getErrorMessage('email') }}
+                </div>
+              </div>
+
+              <!-- Phone Number -->
+              <div class="col-md-6 mb-3">
+                <label for="phoneNumber" class="form-label fw-semibold">Phone Number</label>
+                <input
+                  type="tel"
+                  id="phoneNumber"
+                  formControlName="phoneNumber"
+                  class="form-control"
+                  placeholder="+1234567890"
+                  [class.is-invalid]="isFieldInvalid('phoneNumber')"
+                >
+                <div class="invalid-feedback" *ngIf="isFieldInvalid('phoneNumber')">
+                  {{ getErrorMessage('phoneNumber') }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Website URL -->
+            <div class="mb-3">
+              <label for="websiteUrl" class="form-label fw-semibold">Website URL</label>
+              <input
+                type="url"
+                id="websiteUrl"
+                formControlName="websiteUrl"
+                class="form-control"
+                placeholder="https://www.example.com"
+                [class.is-invalid]="isFieldInvalid('websiteUrl')"
+              >
+              <div class="invalid-feedback" *ngIf="isFieldInvalid('websiteUrl')">
+                {{ getErrorMessage('websiteUrl') }}
+              </div>
+            </div>
+
+            <!-- Company Logo -->
+            <div class="mb-4">
+              <label for="logo" class="form-label fw-semibold">Company Logo</label>
+              <input
+                type="file"
+                id="logo"
+                (change)="onFileSelected($event)"
+                class="form-control"
+                accept="image/*"
+                [class.is-invalid]="logoError"
+              >
+              <div class="invalid-feedback" *ngIf="logoError">
+                {{ logoErrorMessage }}
+              </div>
+              
+              <!-- Logo Preview -->
+              <div *ngIf="logoPreview" class="mt-3 text-center">
+                <img [src]="logoPreview" alt="Logo Preview" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+                <div class="mt-2">
+                  <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeLogo()">
+                    <i class="bi bi-trash me-1"></i>Remove Logo
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid mb-3">
+              <button
+                type="submit"
+                class="btn btn-primary btn-lg"
+                [disabled]="registrationForm.invalid || isLoading"
+              >
+                <span *ngIf="!isLoading">Sign Up</span>
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+                <span *ngIf="isLoading">Creating account...</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Success Message -->
+          <div *ngIf="successMessage" class="alert alert-success mt-3">
+            {{ successMessage }}
+          </div>
+
+          <!-- Error Message -->
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+            {{ errorMessage }}
+          </div>
+
+          <!-- Login Link -->
+          <div class="text-center mt-3">
+            <p class="mb-0">Already have an account? <a routerLink="/login" class="text-decoration-none">Login here</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="container-fluid gradient-bg min-vh-100 py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-md-7 col-sm-12">
+      <div class="card">
+        <div class="card-body p-5">
+          <div class="text-center mb-4">
+            <h1 class="text-gradient fw-bold">OTP Validation</h1>
+            <p class="text-muted">Enter the 6-digit code sent to your email</p>
+          </div>
+
+          <form [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+            <!-- OTP Input -->
+            <div class="mb-4">
+              <label for="otpCode" class="form-label fw-semibold">OTP Code *</label>
+              <input
+                type="text"
+                id="otpCode"
+                formControlName="otpCode"
+                class="form-control form-control-lg text-center"
+                placeholder="000000"
+                maxlength="6"
+                (input)="onOtpInput($event)"
+                [class.is-invalid]="otpForm.get('otpCode')?.invalid && otpForm.get('otpCode')?.touched"
+              >
+              <div class="invalid-feedback" *ngIf="otpForm.get('otpCode')?.invalid && otpForm.get('otpCode')?.touched">
+                OTP code must be exactly 6 digits
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid mb-3">
+              <button
+                type="submit"
+                class="btn btn-primary btn-lg"
+                [disabled]="otpForm.invalid || isLoading"
+              >
+                <span *ngIf="!isLoading">Validate OTP</span>
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+                <span *ngIf="isLoading">Validating...</span>
+              </button>
+            </div>
+
+            <!-- Resend OTP -->
+            <div class="text-center">
+              <button
+                type="button"
+                class="btn btn-link text-decoration-none"
+                (click)="resendOtp()"
+                [disabled]="countdown > 0 || isLoading"
+              >
+                <span *ngIf="countdown === 0">Resend OTP</span>
+                <span *ngIf="countdown > 0">Resend in {{ countdown }}s</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Error Message -->
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+            {{ errorMessage }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
